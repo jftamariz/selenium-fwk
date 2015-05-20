@@ -80,6 +80,7 @@ public class WebDriverBase {
 	{
 		WebDriver localDriver = null;
 		DesiredCapabilities dc = null;
+		DesiredCapabilities capabilities = null;
 		org.openqa.selenium.Proxy proxy = null;
 	
 		switch(browser)
@@ -130,12 +131,14 @@ public class WebDriverBase {
 			break;
 		case ANDROID:
 			System.out.println(" [Info-APCap] - Android device selected");
-			DesiredCapabilities capabilities = new DesiredCapabilities();
+			capabilities = new DesiredCapabilities();
 			capabilities.setCapability("deviceName", "android phone");
 		    capabilities.setCapability("app", "Chrome");
 		    capabilities.setCapability(CapabilityType.BROWSER_NAME, "");
-		    capabilities.setCapability(CapabilityType.VERSION, "4.2.1");
+		    capabilities.setCapability(CapabilityType.VERSION, "4.4.2");
 		    capabilities.setCapability("platformName", "Android");
+		    //capabilities.setCapability("chromedriverExecutable", getDriverFilePath("driver.chrome.android"));
+		    
 		    try {
 		    	//localDriver = new AppiumDriver(new URL("http://127.0.0.1:4723/wd/hub"), capabilities);
 				localDriver = new RemoteWebDriver(new URL("http://127.0.0.1:4723/wd/hub"), capabilities);
@@ -145,7 +148,35 @@ public class WebDriverBase {
 				e.printStackTrace();
 			}
 				break;
+				
+		case ANDROIDNATIVE:
+			File appDir = new File("C:\\Users\\Julio\\Documents\\__LiveSafe\\Android");
+			File appFile = new File(appDir, "app-production-release.apk");
+			
+			System.out.println(" [Info-APCap] - Android device for Native App  was selected");
+			capabilities = new DesiredCapabilities();
+			capabilities.setCapability("deviceName", "android phone");
+		    //capabilities.setCapability("app", "Chrome");
+			capabilities.setCapability("app", appFile.getAbsolutePath());
+		    capabilities.setCapability(CapabilityType.BROWSER_NAME, "");
+		    capabilities.setCapability(CapabilityType.VERSION, "4.4.2");
+		    capabilities.setCapability("platformName", "Android");
+		    //capabilities.setCapability("chromedriverExecutable", getDriverFilePath("driver.chrome.android"));
+		    capabilities.setCapability("appPackage","com.livesafe.app");
+		    capabilities.setCapability("appActivity", ".LiveSafeApplication");
 		    
+		    
+		    
+		    try {
+		    	//localDriver = new AppiumDriver(new URL("http://127.0.0.1:4723/wd/hub"), capabilities);
+				localDriver = new RemoteWebDriver(new URL("http://127.0.0.1:4723/wd/hub"), capabilities);
+		    	//localDriver = new RemoteWebDriver(new URL("http://127.0.0.1:4725/wd/hub"), capabilities);
+		    	
+			} catch (MalformedURLException e) {
+				e.printStackTrace();
+			}
+				break;
+				
 		case IPHONE:
 			System.out.println(" [Info-APCap] - iPhone device selected - local");
 			DesiredCapabilities capabilitiesiphone = new DesiredCapabilities();
@@ -344,7 +375,8 @@ public class WebDriverBase {
 			if(PlatformTool.isArchitecture("x86_64")|| PlatformTool.isArchitecture("amd64")){
 				if(PlatformTool.isPlatform("windows")){
 
-					String pathChromeDriverWindows = getDriverFilePath("driver.chrome.wondows");
+					String pathChromeDriverWindows = getDriverFilePath("driver.chrome.windows");
+					//System.out.println(" [Info] - Windows chrome32 : " + pathChromeDriverWindows);
 					System.setProperty("webdriver.chrome.driver",pathChromeDriverWindows);
 				}
 				else if(PlatformTool.isPlatform("mac")){
@@ -361,7 +393,11 @@ public class WebDriverBase {
 			else{
 				// chromedriver_win32.zip was used for both 32-bit and 64-bit windows systems
 				if(PlatformTool.isPlatform("windows")){
-					String pathChromeDriverWindows = getDriverFilePath("driver.chrome.wondows");
+					
+					
+					String pathChromeDriverWindows = getDriverFilePath("driver.chrome.windows");
+					
+					System.out.println(" [Info] - Windows chrome32 " + pathChromeDriverWindows);
 					System.setProperty("webdriver.chome.driver",pathChromeDriverWindows);
 				}
 				// chromedriver_mac32.zip was used for both 32-bit and 64-bit mac systems
