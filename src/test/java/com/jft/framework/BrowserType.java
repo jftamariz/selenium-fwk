@@ -7,7 +7,8 @@ public enum BrowserType {
 	SAFARI("safari"),
 	CHROME("chrome"),
 	ANDROID("android"),
-	IPHONE("iphone");
+	IPHONE("iphone"),
+	ANDROIDNATIVE("androidnative");
 	
 	private final String browser;
 	

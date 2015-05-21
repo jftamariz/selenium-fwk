@@ -162,8 +162,8 @@ public class WebDriverBase {
 		    capabilities.setCapability(CapabilityType.VERSION, "4.4.2");
 		    capabilities.setCapability("platformName", "Android");
 		    //capabilities.setCapability("chromedriverExecutable", getDriverFilePath("driver.chrome.android"));
-		    capabilities.setCapability("appPackage","com.livesafe.app");
-		    capabilities.setCapability("appActivity", ".LiveSafeApplication");
+		    capabilities.setCapability("appPackage","com.livesafe.activities");
+		    capabilities.setCapability("appActivity", ".SplashActivity");
 		    
 		    
 		    
